@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
+	<link rel="stylesheet" href="style.css">
+	<title>LTO Driving Exam Quiz - NP to PL</title>
+</head>
+<body>
+<div id="quiz-overlay">
+	<div id="shuffle-toggle">
+		<p>Would you prefer randomized choices?</p>
+	  <div class="toggle-switch off" id="shuffle-switch">
+		<div class="toggle-option off">OFF</div>
+		<div class="toggle-option on">ON</div>
+	  </div>
+	  <input type="checkbox" id="shuffle-checkbox">
+	</div>
+	<div id="order-toggle">
+	  <p>Randomize question order?</p>
+	  <div class="toggle-switch off" id="order-switch">
+		<div class="toggle-option off">OFF</div>
+		<div class="toggle-option on">ON</div>
+	  </div>
+	  <input type="checkbox" id="order-checkbox">
+	</div>
+	<div id="pinned-section" style="margin-top:20px; text-align:center;">
+	  <button id="start-pinned-btn">📌 Start Pinned Quiz (<span id="pinned-count-overlay">0</span>)</button>
+	  <button id="clear-pinned-btn">🗑️ Clear Pinned</button>
+	</div>
+
+
+	<button id="start-quiz-btn">Start Quiz</button>
+</div>
+
+
+
+
+	<h1 id="quiz-title">APOA Rules Summary</h1>
+	<div class="top-bar">
+		<div class="score-display" id="score">✅ 0 / ❎ 0</div>
+		<div class="question-count">
+		  <input type="number" id="question-input" min="1">
+		  <span id="total-display" style="margin: 0 8px;">/ 3</span>
+		  <button id="go-btn">Go</button>
+		  <button id="pin-btn" class="pin-btn">📌 (<span id="pinned-count-btn">0</span>)</button>
+		</div>
+	</div>
+
+
+	<div class="question-text" id="question"></div>
+
+	
+
+	<!-- Use div instead of form -->
+	<div class="answers" id="answers">
+	</div>
+
+	<button class="next-btn" id="next">Next</button>
+	<div class="answer-display" id="answer-display"></div>
+
+<div id="final-summary" style="display:none; margin-top: 30px; font-size: 1.2em; text-align: center;"></div>
+
+<div id="live-review" style="display:none; margin-top:30px;">
+  <hr>
+  <h3>🧠 Review Incorrect Answers</h3>
+  <div id="review-list"></div>
+</div>
+
+	<script id="xml-data" type="text/xml">
+<questions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<question>
+		<text>Right Person</text>
+		<a>3</a>
+		<b>8</b>
+		<c correct="true">1</c>
+	</question>
+	<question>
+		<text>Answering Machine</text>
+		<a>2</a>
+		<b>6</b>
+		<c correct="true">3</c>
+	</question>
+	<question>
+		<text>Deceased</text>
+		<a>6</a>
+		<b>25</b>
+		<c correct="true">5</c>
+	</question>
+	<question>
+		<text>Spouse</text>
+		<a>31</a>
+		<b>11</b>
+		<c correct="true">6</c>
+	</question>
+	<question>
+		<text>Not home/call back</text>
+		<a>54</a>
+		<b>3</b>
+		<c correct="true">7</c>
+	</question>
+	<question>
+		<text>Take off list</text>
+		<a>85</a>
+		<b>21</b>
+		<c correct="true">44</c>
+	</question>
+	<question>
+		<text>Jr. or Sr. ?</text>
+		<a>29</a>
+		<b>91</b>
+		<c correct="true">83</c>
+	</question>
+	<question>
+		<text>No English</text>
+		<a>99</a>
+		<b>38</b>
+		<c correct="true">84</c>
+	</question>
+	<question>
+		<text>Wrong Number</text>
+		<a>68</a>
+		<b>93</b>
+		<c correct="true">85</c>
+	</question>
+	<question>
+		<text>Not sure if it's a child</text>
+		<a>69</a>
+		<b>88</b>
+		<c correct="true">86</c>
+	</question>
+	<question>
+		<text>Sure of a child</text>
+		<a>84</a>
+		<b>86</b>
+		<c correct="true">87</c>
+	</question>
+	
+	
+	
+	
+	<question>
+		<text>Yes</text>
+		<a>2</a>
+		<b>3</b>
+		<c correct="true">1</c>
+	</question>
+	<question>
+		<text>Yes (Specific amount before support question)</text>
+		<a>3</a>
+		<b>5</b>
+		<c correct="true">2</c>
+	</question>
+	<question>
+		<text>Long Repeat of Pitch</text>
+		<a>28</a>
+		<b>36</b>
+		<c correct="true">31</c>
+	</question>
+	<question>
+		<text>Short Repeat of almost all files</text>
+		<a>30</a>
+		<b>36</b>
+		<c correct="true">32</c>
+	</question>
+	<question>
+		<text>Repeat of Support Question</text>
+		<a>28</a>
+		<b>34</b>
+		<c correct="true">33</c>
+	</question>
+	<question>
+		<text>Basic NO rebuttal (2 rounds)</text>
+		<a>50</a>
+		<b>86</b>
+		<c correct="true">41</c>
+	</question>
+	<question>
+		<text>Final NO</text>
+		<a>56</a>
+		<b>87</b>
+		<c correct="true">43</c>
+	</question>
+	<question>
+		<text>Take of List</text>
+		<a>40</a>
+		<b>68</b>
+		<c correct="true">44</c>
+	</question>
+	<question>
+		<text>$5 offer (Only 1 Round)</text>
+		<a>50</a>
+		<b>48</b>
+		<c correct="true">45</c>
+	</question>
+	<question>
+		<text>Politics (2 rounds)</text>
+		<a>36</a>
+		<b>84</b>
+		<c correct="true">46</c>
+	</question>
+	<question>
+		<text>Friend or Family is Officer (2 rounds)</text>
+		<a>81</a>
+		<b>68</b>
+		<c correct="true">47</c>
+	</question>
+	<question>
+		<text>I am an officer (2 rounds)</text>
+		<a>52</a>
+		<b>39</b>
+		<c correct="true">48</c>
+	</question>
+	<question>
+		<text>Talk to it over (2 rounds)</text>
+		<a>48</a>
+		<b>69</b>
+		<c correct="true">51</c>
+	</question>
+	<question>
+		<text>Maybe (2 rounds)</text>
+		<a>96</a>
+		<b>50</b>
+		<c correct="true">52</c>
+	</question>
+	<question>
+		<text>Moving / Vacation / How Often (2 rounds)</text>
+		<a>87</a>
+		<b>39</b>
+		<c correct="true">53</c>
+	</question>
+	<question>
+		<text>Hesitant</text>
+		<a>50</a>
+		<b>68</b>
+		<c correct="true">54</c>
+	</question>
+	<question>
+		<text>Club / Membership / Monthly</text>
+		<a>50</a>
+		<b>53</b>
+		<c correct="true">55</c>
+	</question>
+	<question>
+		<text>RPI Questions</text>
+		<a>50</a>
+		<b>56</b>
+		<c correct="true">57</c>
+	</question>
+	<question>
+		<text>Program Questions</text>
+		<a>52</a>
+		<b>54</b>
+		<c correct="true">58</c>
+	</question>
+	<question>
+		<text>How Much (Price  Pitch)</text>
+		<a>60</a>
+		<b>71</b>
+		<c correct="true">61</c>
+	</question>
+	<question>
+		<text>Payment process question</text>
+		<a>58</a>
+		<b>96</b>
+		<c correct="true">62</c>
+	</question>
+	<question>
+		<text>Don't do over the phone (2 rounds)</text>
+		<a>58</a>
+		<b>53</b>
+		<c correct="true">63</c>
+	</question>
+	<question>
+		<text>Percentage Question</text>
+		<a>55</a>
+		<b>59</b>
+		<c correct="true">65</c>
+	</question>
+	<question>
+		<text>Are you an officer?</text>
+		<a>86</a>
+		<b>62</b>
+		<c correct="true">66</c>
+	</question>
+	<question>
+		<text>Volunteer</text>
+		<a>52</a>
+		<b>64</b>
+		<c correct="true">67</c>
+	</question>
+	<question>
+		<text>I give to others (2 rounds)</text>
+		<a>58</a>
+		<b>90</b>
+		<c correct="true">71</c>
+	</question>
+	<question>
+		<text>Already gave to you (2 rounds)</text>
+		<a>89</a>
+		<b>99</b>
+		<c correct="true">72</c>
+	</question>
+	<question>
+		<text>Where'd you get my number</text>
+		<a>44</a>
+		<b>98</b>
+		<c correct="true">74</c>
+	</question>
+	<question>
+		<text>Scam (2 rounds)</text>
+		<a>60</a>
+		<b>58</b>
+		<c correct="true">75</c>
+	</question>
+	<question>
+		<text>Business</text>
+		<a>99</a>
+		<b>85</b>
+		<c correct="true">81</c>
+	</question>
+	<question>
+		<text>No English</text>
+		<a>55</a>
+		<b>79</b>
+		<c correct="true">84</c>
+	</question>
+	<question>
+		<text>Wrong Number</text>
+		<a>59</a>
+		<b>44</b>
+		<c correct="true">85</c>
+	</question>
+	<question>
+		<text>Tax Deductible</text>
+		<a>90</a>
+		<b>78</b>
+		<c correct="true">87</c>
+	</question>
+	<question>
+		<text>Local Area (2 rounds)</text>
+		<a>87</a>
+		<b>85</b>
+		<c correct="true">88</c>
+	</question>
+
+
+
+	<question>
+		<text>Yes (followerd by $ agreed to)(</text>
+		<a>2</a>
+		<b>3</b>
+		<c correct="true">1</c>
+	</question>
+	<question>
+		<text>ask which one is best for you</text>
+		<a>1</a>
+		<b>3</b>
+		<c correct="true">2</c>
+	</question>
+
+
+
+
+	<question>
+		<text>Questions</text>
+		<a>6</a>
+		<b>7</b>
+		<c correct="true">5</c>
+	</question>
+	<question>
+		<text>Spell that?</text>
+		<a>8</a>
+		<b>5</b>
+		<c correct="true">7</c>
+	</question>
+	<question>
+		<text>Busy</text>
+		<a>9</a>
+		<b>10</b>
+		<c correct="true">8</c>
+	</question>
+	<question>
+		<text>Repeat of close including disclosure</text>
+		<a>68</a>
+		<b>79</b>
+		<c correct="true">32</c>
+	</question>
+
+
+
+	<question>
+		<text>Always STOP the sound file after 4 considective words from the customer or if they say a key STOP word. When the customer strings together multiple objections, handle the last one. Sound like a natural conversation by using hot keys ans always hitting the right button at the right time.</text>
+		<a>2</a>
+		<b>5</b>
+		<c correct="true">9</c>
+	</question>
+
+
+
+
+	<question>
+		<text>$10</text>
+		<a>20</a>
+		<b>5</b>
+		<c correct="true">10</c>
+	</question>
+	<question>
+		<text>$100</text>
+		<a>13</a>
+		<b>12</b>
+		<c correct="true">11</c>
+	</question>
+	<question>
+		<text>Generous (any amount over $10 that is not on the amount screen)</text>
+		<a>13</a>
+		<b>17</b>
+		<c correct="true">12</c>
+	</question>
+	<question>
+		<text>$15</text>
+		<a>5</a>
+		<b>10</b>
+		<c correct="true">15</c>
+	</question>
+	<question>
+		<text>$20</text>
+		<a>10</a>
+		<b>15</b>
+		<c correct="true">20</c>
+	</question>
+	<question>
+		<text>$25</text>
+		<a>45</a>
+		<b>50</b>
+		<c correct="true">25</c>
+	</question>
+	<question>
+		<text>$30</text>
+		<a>20</a>
+		<b>25</b>
+		<c correct="true">30</c>
+	</question>
+	<question>
+		<text>$35</text>
+		<a>50</a>
+		<b>45</b>
+		<c correct="true">35</c>
+	</question>
+	<question>
+		<text>$40</text>
+		<a>20</a>
+		<b>30</b>
+		<c correct="true">40</c>
+	</question>
+	<question>
+		<text>$45</text>
+		<a>40</a>
+		<b>35</b>
+		<c correct="true">45</c>
+	</question>
+	<question>
+		<text>$50</text>
+		<a>60</a>
+		<b>45</b>
+		<c correct="true">50</c>
+	</question>
+	<question>
+		<text>$75</text>
+		<a>45</a>
+		<b>50</b>
+		<c correct="true">75</c>
+	</question>
+</questions>
+	</script>
+
+	<script src="script.js" defer></script>
+	<script>
+	if ("serviceWorker" in navigator) {
+	  navigator.serviceWorker.register("service-worker.js");
+	}
+
+	</script>
+	
+	<script id="xml-data" type="text/xml">
+	<!-- your XML questions here -->
+	</script>
+
+</body>
+</html>
